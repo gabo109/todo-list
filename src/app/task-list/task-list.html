@@ -1,0 +1,7 @@
+<ul>
+  <app-task-item
+    *ngFor="let tarea of tareas"
+    [tarea]="tarea"
+    (remove)="remove.emit($event)">
+  </app-task-item>
+</ul>

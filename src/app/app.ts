@@ -1,38 +1,30 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { TaskInput } from './task-input/task-input';
+import { TaskList } from './task-list/task-list';
 
-type Tarea = {
+export interface Tarea {
   id: number;
   descripcion: string;
 };
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,FormsModule],
+  imports: [RouterOutlet,FormsModule,TaskInput,TaskList],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   protected title = 'todo-list';
-  tarea: string = '';
   tareas: Tarea[] = [];
-  private contadorId: number = 1;
 
-  agregarTarea() {
-    const desc = this.tarea.trim();
-    if (desc) {
-      const nuevaTarea: Tarea = {
-        id: this.contadorId++,
-        descripcion: desc,
-      };
-      this.tareas.push(nuevaTarea);
-      this.tarea = '';
-    }
-  }
-
-  eliminarTareas() {
-    this.tareas = [];
+  agregarTarea(descripcion: string) {
+    if (descripcion.trim() === '') return;
+    this.tareas = [
+      ...this.tareas,
+      { id: this.tareas.length + 1, descripcion }
+    ];
   }
 
   completarTarea(id: number) {
